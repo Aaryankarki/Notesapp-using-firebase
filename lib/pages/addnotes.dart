@@ -16,7 +16,7 @@ class _AddNoteState extends State<AddNote> {
   final TextEditingController studyController = TextEditingController();
   final TextEditingController gpaController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  //dispose
   @override
   void dispose() {
     nameController.clear();
