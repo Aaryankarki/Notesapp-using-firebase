@@ -55,17 +55,7 @@ class _AddNoteState extends State<AddNote> {
     studyController.clear();
   }
 
-  void read() {
-    // print("Read");
-  }
-
-  void update() {
-    // print("Update");
-  }
-
-  void delete() {
-    // print("Delete");
-  }
+//build context
 
   @override
   Widget build(BuildContext context) {
