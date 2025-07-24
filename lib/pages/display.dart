@@ -1,21 +1,63 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:noteapp/constant/const.dart';
 import 'package:noteapp/pages/addnotes.dart';
 import 'package:noteapp/pages/update.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class StudentListScreen extends StatelessWidget {
   const StudentListScreen({super.key});
 
-  @override
+  Stream<String> timeStream() async* {
+    const apiKey = OPENWEATHER_API_KEY;
+    const city = "Kathmandu";
+    final url =
+        "https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey";
+
+    while (true) {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final timestamp = data['dt'] as int;
+
+        final dateTime = DateTime.fromMillisecondsSinceEpoch(
+          timestamp * 1000,
+        ).toLocal();
+
+        final timeString = DateFormat.Hms().format(dateTime);
+        yield timeString;
+      } else {
+        yield "Error";
+      }
+
+      await Future.delayed(Duration(minutes: 1));
+    }
+  }
+
+  @override 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Student List'),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
+        title: StreamBuilder<String>(
+          stream: timeStream(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Text('Loading time...');
+            } else if (snapshot.hasError) {
+              return const Text('Error fetching time');
+            } else {
+              return Text('Time: ${snapshot.data}');
+            }
+          },
+        ),
       ),
+
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('notes').snapshots(),
         builder: (context, snapshots) {
@@ -31,6 +73,7 @@ class StudentListScreen extends StatelessWidget {
             itemCount: data.length,
             itemBuilder: (context, index) {
               final doc = data[index];
+
               final student = doc.data() as Map<String, dynamic>;
               final docId = doc.id;
               log(student.toString());

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:noteapp/pages/display.dart';
-import 'package:noteapp/pages/homepage.dart';
 
 class AddNote extends StatefulWidget {
   const AddNote({super.key});
@@ -16,6 +15,7 @@ class _AddNoteState extends State<AddNote> {
   final TextEditingController studyController = TextEditingController();
   final TextEditingController gpaController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
   //dispose
   @override
   void dispose() {
@@ -55,7 +55,7 @@ class _AddNoteState extends State<AddNote> {
     studyController.clear();
   }
 
-//build context
+  //build context
 
   @override
   Widget build(BuildContext context) {
@@ -116,24 +116,6 @@ class _AddNoteState extends State<AddNote> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FilledButton(onPressed: createNotes, child: Text("Create")),
-                  FilledButton(
-                    onPressed: () {
-                      read();
-                    },
-                    child: Text("Read"),
-                  ),
-                  FilledButton(
-                    onPressed: () {
-                      update();
-                    },
-                    child: Text("Update"),
-                  ),
-                  FilledButton(
-                    onPressed: () {
-                      delete();
-                    },
-                    child: Text("Delete"),
-                  ),
                 ],
               ),
             ],
