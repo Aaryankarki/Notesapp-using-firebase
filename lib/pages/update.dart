@@ -29,7 +29,7 @@ class _UpdateNoteState extends State<UpdateNote> {
   final TextEditingController studyController = TextEditingController();
   final TextEditingController gpaController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+//init state
   @override
   void initState() {
     nameController.text = widget.name;
@@ -38,7 +38,7 @@ class _UpdateNoteState extends State<UpdateNote> {
     studyController.text = widget.studyId;
     super.initState();
   }
-
+//dispose
   @override
   void dispose() {
     nameController.clear();
