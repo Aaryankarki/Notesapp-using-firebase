@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:noteapp/pages/display.dart';
-
+//update the notes
 class UpdateNote extends StatefulWidget {
   final String name;
   final String studentId;
